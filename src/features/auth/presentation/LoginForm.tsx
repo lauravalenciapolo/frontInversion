@@ -1,16 +1,27 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import { useModuleFeatures } from '@/hooks/useModuleFeatures';
 import { Button } from '@/components/atoms/Button';
 import { ButtonBuilder } from '@/components/atoms/Button/ButtonBuilder';
+import {useAuthStore} from '@/features/auth/application/store/useAuthStore';
+import {useNavigate} from 'react-router-dom';
 
 export const LoginForm: React.FC = () => {
+  const { login, isAuthenticated } = useAuthStore();
+  const navigate = useNavigate();
+  const [dataLogin, setDataLogin] = useState({ email: '', password: '' });
   const { features } = useModuleFeatures();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Aquí iría la lógica de login
+    await login({email:dataLogin.email, password:dataLogin.password});
+    setDataLogin({ email: '', password: '' });
   };
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/");
+    }
+  }, [isAuthenticated, navigate]);
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
@@ -22,6 +33,8 @@ export const LoginForm: React.FC = () => {
           id="email"
           type="email"
           required
+          onChange={(e) => setDataLogin({ ...dataLogin, email: e.target.value })}
+          value={dataLogin.email}
           className="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500"
         />
       </div>
@@ -33,6 +46,8 @@ export const LoginForm: React.FC = () => {
           id="password"
           type="password"
           required
+          onChange={(e) => setDataLogin({ ...dataLogin, password: e.target.value })}
+          value={dataLogin.password}
           className="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500"
         />
       </div>

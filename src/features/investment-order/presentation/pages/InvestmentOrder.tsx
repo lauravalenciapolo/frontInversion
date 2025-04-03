@@ -5,7 +5,7 @@ import { ButtonBuilder } from '@/components/atoms/Button/ButtonBuilder';
 import { Button } from '@/components/atoms/Button/Button';
 import { isFeatureEnabled, FeatureFlags } from '@/core/config/featureFlags';
 import { cn } from '@/core/utils/cn';
-import { useAuthStore } from '@/features/auth/application/authStore';
+import { useAuthStore } from '@/features/auth/application/store/useAuthStore';
 import { RefreshCcw, Plus } from 'lucide-react';
 
 // Builder para tarjetas de órdenes
@@ -63,7 +63,7 @@ const OrderCard = ({
     .setChildren('Completar')
     .setDisabled(order.status !== 'PENDING')
     .setNeumorph(useNeumorphism)
-    .setOnClick((e) => { onStatusChange?.(order.id, 'COMPLETED'); })
+    .setOnClick(() => { onStatusChange?.(order.id, 'COMPLETED'); })
     .build();
 
   const cancelButton = new ButtonBuilder()
@@ -72,7 +72,7 @@ const OrderCard = ({
     .setChildren('Cancelar')
     .setDisabled(order.status !== 'PENDING')
     .setNeumorph(useNeumorphism)
-    .setOnClick((e) => { onStatusChange?.(order.id, 'CANCELED'); })
+    .setOnClick(() => { onStatusChange?.(order.id, 'CANCELED'); })
     .build();
 
   // Cálculo de clases condicionales
@@ -139,6 +139,7 @@ const OrderCard = ({
 export const InvestmentOrder = () => {
   const { items, loading, error, fetchItems, updateItem, createItem } = useInvestmentOrder();
   const { user } = useAuthStore();
+  console.log('user', user);
   const useNeumorphism = isFeatureEnabled(FeatureFlags.USE_NEUMORPHISM);
   const [isCreating, setIsCreating] = useState(false);
   const [formData, setFormData] = useState({
@@ -211,7 +212,7 @@ export const InvestmentOrder = () => {
     .setSize('sm')
     .setLeftIcon(<RefreshCcw className="w-4 h-4" />)
     .setChildren('Recargar')
-    .setOnClick((e) => { fetchItems(); })
+    .setOnClick(() => { fetchItems(); })
     .setNeumorph(useNeumorphism)
     .build();
 
@@ -221,7 +222,7 @@ export const InvestmentOrder = () => {
     .setSize('sm')
     .setLeftIcon(<Plus className="w-4 h-4" />)
     .setChildren('Nueva Orden')
-    .setOnClick((e) => { setIsCreating(true); })
+    .setOnClick(() => { setIsCreating(true); })
     .setNeumorph(useNeumorphism)
     .build();
 
@@ -240,7 +241,7 @@ export const InvestmentOrder = () => {
     .setVariant('secondary')
     .setSize('md')
     .setChildren('Cancelar')
-    .setOnClick((e) => { setIsCreating(false); })
+    .setOnClick(() => { setIsCreating(false); })
     .setNeumorph(useNeumorphism)
     .build();
 

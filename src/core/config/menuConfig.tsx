@@ -15,7 +15,6 @@ import {
   FlagIcon,
   BanknotesIcon
 } from '@heroicons/react/24/outline';
-import React from 'react';
 
 // Menu configuration connected to feature flags
 export const menuItems: MenuItem[] = [
