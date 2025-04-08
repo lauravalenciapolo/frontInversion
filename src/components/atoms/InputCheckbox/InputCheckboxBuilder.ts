@@ -1,25 +1,20 @@
-import { InputProps, InputSize, InputVariant } from "./Input.types";
+import { CheckboxProps, CheckboxSize, CheckboxVariant, InputType } from "./InputCheckbox.types";
 
-export class InputBuilder {
-  private props: Partial<InputProps> = {};
+export class InputCheckboxBuilder {
+  private props: Partial<CheckboxProps> = {};
 
   setLabel(label: string) {
     this.props.label = label;
     return this;
   }
 
-  setType(type: string) {
+  setChecked(checked: boolean) {
+    this.props.checked = checked;
+    return this;
+  }
+
+  setType(type: InputType) {
     this.props.type = type;
-    return this;
-  }
-
-  setPlaceholder(placeholder: string) {
-    this.props.placeholder = placeholder;
-    return this;
-  }
-
-  setValue(value: string | number) {
-    this.props.value = value;
     return this;
   }
 
@@ -28,8 +23,8 @@ export class InputBuilder {
     return this;
   }
 
-  setInputSize(size: InputSize) {
-    this.props.inputSize = size;
+  setCheckboxSize(size: CheckboxSize) {
+    this.props.checkboxSize = size;
     return this;
   }
 
@@ -38,7 +33,7 @@ export class InputBuilder {
     return this;
   }
 
-  setVariant(variant: InputVariant) {
+  setVariant(variant: CheckboxVariant) {
     this.props.variant = variant;
     return this;
   }
@@ -53,7 +48,7 @@ export class InputBuilder {
     return this;
   }
 
-  build(): InputProps {
-    return this.props as InputProps;
+  build(): CheckboxProps {
+    return this.props as CheckboxProps;
   }
 }

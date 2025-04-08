@@ -71,9 +71,9 @@ export const OrderFormVariableIncome = ({
   };
 
   const saveOrderButton = new ButtonBuilder()
-    .setVariant("success")
-    .setSize("md")
-    .setChildren("Guardar Orden")
+    .setVariant("primary")
+    .setSize("sm")
+    .setChildren("Guardar")
     .setDisabled(
       !formData.symbol || formData.quantity <= 0 || formData.price <= 0
     )
@@ -82,7 +82,7 @@ export const OrderFormVariableIncome = ({
 
   const cancelOrderButton = new ButtonBuilder()
     .setVariant("secondary")
-    .setSize("md")
+    .setSize("sm")
     .setChildren("Cancelar")
     .setOnClick(() => setFormData(initialFormatData))
     .setNeumorph(useNeumorphism)

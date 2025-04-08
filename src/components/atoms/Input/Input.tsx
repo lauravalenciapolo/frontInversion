@@ -42,6 +42,7 @@ export const Input: React.FC<InputProps> = ({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
+        disabled={props.disabled}
         className={cn(
           baseStyles,
           sizeStyles[inputSize],

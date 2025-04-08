@@ -15,7 +15,7 @@ export const InvestmentOrderHeader: React.FC<InvestmentOrderHeaderProps> = ({
   title
 }) => {
   const refreshButton = new ButtonBuilder()
-    .setVariant("secondary")
+    .setVariant("primary")
     .setSize("sm")
     .setLeftIcon(<RefreshCcw className="w-4 h-4" />)
     .setChildren("Recargar")

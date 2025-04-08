@@ -33,9 +33,10 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const baseStyles = 'inline-flex items-center justify-center font-medium rounded transition-all duration-200';
 
     const sizeStyles: Record<ButtonSize, string> = {
-      sm: 'px-3 py-1.5 text-sm',
-      md: 'px-4 py-2 text-base',
-      lg: 'px-6 py-3 text-lg',
+      xs: 'min-w-[50px] px-2 py-1 text-xs',
+      sm: 'min-w-[80px] px-3 py-1.5 text-sm',
+      md: 'min-w-[110px] px-4 py-2 text-base',
+      lg: 'min-w-[150px] px-6 py-3 text-lg',
     };
 
     const variantStyles: Record<ButtonVariant, string> = {

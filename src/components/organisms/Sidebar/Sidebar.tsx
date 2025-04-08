@@ -5,10 +5,10 @@ import { SidebarProps } from './Sidebar.types';
 import { Button } from "@/components/atoms/Button";
 import { NavigationMenu } from "@/components/molecules/NavigationMenu/NavigationMenu";
 // Icons
-const MenuIcon = () => <span>☰</span>;
 export const Sidebar: React.FC<SidebarProps> = ({sidebarOpen, setSidebarOpen}) => {
   const useNeumorphism = isFeatureEnabled(FeatureFlags.USE_NEUMORPHISM);
   const { user } = useAuthStore();
+  const MenuIcon = () => sidebarOpen ? <span>X</span>: <span>☰</span>;
 
   return (
       <div
@@ -30,8 +30,8 @@ export const Sidebar: React.FC<SidebarProps> = ({sidebarOpen, setSidebarOpen}) =
         </div>
         <div className="p-4 hidden sm:block">
           <Button
-            variant="secondary"
-            size="sm"
+            variant="primary"
+            size="xs"
             neumorph={useNeumorphism}
             onClick={() => setSidebarOpen(!sidebarOpen)}
           >

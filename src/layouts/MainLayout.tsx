@@ -30,6 +30,7 @@ export const MainLayout = () => {
 
   const logoutButton = new ButtonBuilder()
     .setVariant("secondary")
+    .setSize("sm")
     .setNeumorph(features.neumorphism)
     .setChildren("Logout")
     .setOnClick(handlerLogout)

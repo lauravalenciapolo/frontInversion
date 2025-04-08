@@ -10,7 +10,7 @@ export const OrderCard = ({
   useNeumorphism,
 }: ReturnType<OrderCardBuilder["build"]>) => {
   const completeButton = new ButtonBuilder()
-    .setVariant("success")
+    .setVariant("primary")
     .setSize("sm")
     .setChildren("Completar")
     .setDisabled(order.status !== "PENDING")
@@ -21,7 +21,7 @@ export const OrderCard = ({
   const cancelButton = new ButtonBuilder()
     .setVariant("danger")
     .setSize("sm")
-    .setChildren("Cancelar")
+    .setChildren("Eliminar")
     .setDisabled(order.status !== "PENDING")
     .setNeumorph(useNeumorphism)
     .setOnClick(() => onStatusChange?.(order.id, "CANCELED"))
@@ -37,7 +37,7 @@ export const OrderCard = ({
   return (
     <div
       className={cn(
-        "p-4 border rounded-lg transition-all",
+        "p-4 border rounded-lg transition-all space-y-4",
         useNeumorphism ? "shadow-neumorph" : "shadow-md",
         className
       )}
@@ -68,24 +68,22 @@ export const OrderCard = ({
         </span>
       </div>
 
-      <div className="flex items-center justify-between">
-        <div>
-          <p className="text-sm">
-            Valor total:{" "}
-            <strong>${(order.quantity * order.price).toFixed(2)}</strong>
-          </p>
-          <p className="text-xs text-gray-500">
-            {order.createdAt.toLocaleString()}
-          </p>
-        </div>
-
-        {order.status === "PENDING" && (
-          <div className="space-x-2">
-            <Button {...completeButton} />
-            <Button {...cancelButton} />
-          </div>
-        )}
+      <div>
+        <p className="text-sm">
+          Valor total:{" "}
+          <strong>${(order.quantity * order.price).toFixed(2)}</strong>
+        </p>
+        <p className="text-xs text-gray-500">
+          {order.createdAt.toLocaleString()}
+        </p>
       </div>
+
+      {order.status === "PENDING" && (
+        <div className="space-x-2 text-end">
+          <Button {...cancelButton} />
+          <Button {...completeButton} />
+        </div>
+      )}
 
       {order.notes && (
         <div className="mt-3 p-2 bg-gray-50 border rounded-md text-sm">

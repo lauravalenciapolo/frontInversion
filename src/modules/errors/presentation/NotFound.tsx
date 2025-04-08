@@ -15,6 +15,7 @@ export const NotFound: React.FC = () => {
         <Link to="/">
           <Button {...new ButtonBuilder()
             .setVariant('primary')
+            .setSize('sm')
             .setNeumorph(features.neumorphism)
             .setChildren('Go Home')
             .build()}

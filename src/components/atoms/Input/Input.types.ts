@@ -11,6 +11,7 @@ export type InputSize = 'sm' | 'md' | 'lg';
     neumorph: boolean,
     className?: string,
     variant: InputVariant,
+    disabled?: boolean,
   }
   
 

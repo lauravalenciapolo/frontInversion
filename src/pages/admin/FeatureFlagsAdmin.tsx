@@ -3,14 +3,13 @@ import {
   isFeatureEnabled, 
   FeatureFlags, 
   featureFlags, 
-  enableFeature, 
-  disableFeature, 
-  getAllFeatures, 
   updateFeatures
 } from '@core/config/featureFlags';
 import { cn } from '@core/utils/cn';
 import { ButtonBuilder } from '@components/atoms/Button/ButtonBuilder';
 import { Button } from '@components/atoms/Button/Button';
+import { InputCheckbox } from '@/components/atoms/InputCheckbox/InputCheckbox';
+import { InputCheckboxBuilder } from '@/components/atoms/InputCheckbox/InputCheckboxBuilder';
 
 interface FeatureFlagToggleProps {
   name: string;
@@ -30,6 +29,17 @@ const FeatureFlagToggle = ({
   requiresAuth 
 }: FeatureFlagToggleProps) => {
   const useNeumorphism = isFeatureEnabled(FeatureFlags.USE_NEUMORPHISM);
+
+  const activeFeatureCheckbox = new InputCheckboxBuilder()
+    .setChecked(enabled)
+    .setType('switch')
+    .setDisabled(false)
+    .setVariant('primary')
+    .setCheckboxSize('md')
+    .setOnChange(() => onChange(name, !enabled))
+    .setNeumorph(useNeumorphism)
+    .build();
+
   
   return (
     <div 
@@ -44,18 +54,7 @@ const FeatureFlagToggle = ({
           <h3 className="font-semibold text-lg">{name}</h3>
           <p className="text-sm text-gray-600">{description}</p>
         </div>
-        <label className="relative inline-flex items-center cursor-pointer">
-          <input 
-            type="checkbox" 
-            className="sr-only peer"
-            checked={enabled}
-            onChange={() => onChange(name, !enabled)}
-          />
-          <div className={cn(
-            "w-11 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all",
-            enabled ? 'peer-checked:bg-primary' : 'bg-gray-200'
-          )}></div>
-        </label>
+          <InputCheckbox {...activeFeatureCheckbox}/>
       </div>
       
       {(permissions?.length || requiresAuth) && (
@@ -184,8 +183,8 @@ export const FeatureFlagsAdmin = () => {
           <Button
             {...new ButtonBuilder()
               .setVariant('primary')
-              .setSize('md')
-              .setChildren(isSaving ? 'Saving...' : 'Save Changes')
+              .setSize('sm')
+              .setChildren(isSaving ? 'Saving...' : 'Save Change')
               .setDisabled(isSaving)
               .setOnClick(handleSave)
               .setNeumorph(useNeumorphism)
