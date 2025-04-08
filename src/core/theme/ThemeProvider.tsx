@@ -19,7 +19,7 @@ interface ThemeProviderProps {
 }
 
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
-  const { hasFeature, setFeature, features } = useModuleFeatures();
+  const { setFeature, features } = useModuleFeatures();
   const isDarkMode = features[FeatureFlags.ENABLE_DARK_MODE] ?? false;
 
   useEffect(() => {

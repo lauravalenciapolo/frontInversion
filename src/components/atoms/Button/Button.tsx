@@ -1,7 +1,6 @@
 import React from 'react';
 import { ButtonProps, ButtonSize, ButtonVariant } from './Button.types';
 import { useModuleFeatures } from '@/hooks/useModuleFeatures';
-import { FeatureFlags } from '@/core/types';
 import { cn } from '@utils/cn';
 
 /**

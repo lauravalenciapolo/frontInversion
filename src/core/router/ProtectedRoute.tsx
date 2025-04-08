@@ -33,7 +33,6 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
 
   // Verificar autenticación
   if (!isAuthenticated()) {
-    console.log("No autenticado, redirigiendo a inicio de sesión");
     return <Navigate to="/auth/login" replace />; // Redirigir a la página de inicio de sesión
   }
 

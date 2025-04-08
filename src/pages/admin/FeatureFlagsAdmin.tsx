@@ -34,7 +34,7 @@ const FeatureFlagToggle = ({
   return (
     <div 
       className={cn(
-        'p-4 border rounded-lg mb-4',
+        'p-4 border rounded-lg mb-4 dark:bg-gray-800',
         enabled ? 'border-green-200 bg-green-50' : 'border-gray-200 bg-gray-50',
         useNeumorphism && 'shadow-neumorph'
       )}
@@ -169,7 +169,7 @@ export const FeatureFlagsAdmin = () => {
   return (
     <div className="p-6">
       <div className={cn(
-        'flex justify-between items-center mb-6 p-4 bg-white rounded-lg',
+        'flex justify-between items-center mb-6 p-4 bg-white rounded-lg dark:bg-gray-800',
         useNeumorphism && 'shadow-neumorph'
       )}>
         <h1 className="text-2xl font-bold">Feature Flags Management</h1>

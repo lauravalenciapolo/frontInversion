@@ -3,18 +3,20 @@ import { FeatureFlags } from "@/core/config/featureFlags";
 import { MainLayout } from "@/layouts/MainLayout";
 import { AuthLayout } from "@/layouts/AuthLayout";
 import { DashboardLayout } from "@/layouts/DashboardLayout";
-import { LoginPage } from "@/features/auth/presentation/LoginPage";
-import { RegisterPage } from "@/features/auth/presentation/RegisterPage";
-import { ForgotPasswordPage } from "@/features/auth/presentation/ForgotPasswordPage";
+import { LoginPage } from "@modules/auth/features/login/presentation/LoginPage";
+import { RegisterPage } from "@modules/auth/features/login/presentation/RegisterPage";
+import { ForgotPasswordPage } from "@modules/auth/features/login/presentation/ForgotPasswordPage";
 import { TodoList } from "@/features/todo/presentation/TodoList";
-import { UserRoles } from "@/features/users/presentation/UserRoles";
-import { SecuritySettings } from "@/features/settings/presentation/SecuritySettings";
-import { GeneralSettings } from "@/features/settings/presentation/GeneralSettings";
-import { NotFound } from "@/features/errors/presentation/NotFound";
-import { Unauthorized } from "@/features/errors/presentation/Unauthorized";
+import { UserRoles } from "@modules/users/presentation/UserRoles";
+import { SecuritySettings } from "@/modules/settings/presentation/SecuritySettings";
+import { GeneralSettings } from "@modules/settings/presentation/GeneralSettings";
+import { NotFound } from "@modules/errors/presentation/NotFound";
+import { Unauthorized } from "@/modules/errors/presentation/Unauthorized";
 import { ProtectedRoute } from "./ProtectedRoute";
-import { InvestmentOrder } from "@/features/investment-order/presentation/pages/InvestmentOrder";
 import { FeatureFlagsAdmin } from "@/pages/admin/FeatureFlagsAdmin";
+import DayOperations from "@/pages/investmentOrder/dayOperations/DayOperations";
+import FixedIncomeOrder from "@/pages/investmentOrder/fixedIncomeOrder/FixedIncomeOrder";
+import VariableIncomeOrder from "@/pages/investmentOrder/variableIncomeOrder/VariableIncomeOrder";
 
 export const routes: RouteObject[] = [
   {
@@ -84,14 +86,40 @@ export const routes: RouteObject[] = [
             ],
           },
           {
-            path: "investment-order",
-            element: (
-              <ProtectedRoute
-                element={<InvestmentOrder />}
-                flag={FeatureFlags.INVESTMENT_ORDER}
-                permissions={["admin", "finance-manager"]}
-              />
-            ),
+            path: "investment-orders",
+            children: [
+              {
+                path: "day-operations",
+                element: (
+                  <ProtectedRoute
+                    element={<DayOperations />}
+                    flag={FeatureFlags.INVESTMENT_ORDER_DAY_OPERATIONS}
+                    permissions={["admin", "finance-manager"]}
+                  />
+                ),
+              },
+              {
+                path: "fixed-income",
+                element: (
+                  <ProtectedRoute
+                    element={<FixedIncomeOrder />}
+                    flag={FeatureFlags.INVESTMENT_ORDER_FIXED_INCOME}
+                    permissions={["admin", "finance-manager"]}
+                  />
+                ),
+              },
+              {
+                path: "variable-income",
+                element: (
+                  <ProtectedRoute
+                    element={<VariableIncomeOrder />}
+                    flag={FeatureFlags.INVESTMENT_ORDER_VARIABLE_INCOME}
+                    permissions={["admin", "finance-manager"]}
+                  />
+                ),
+              },
+
+            ],
           },
         ],
       },

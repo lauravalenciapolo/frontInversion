@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import { cn } from '@core/utils/cn';
-import { PlusIcon, TrashIcon, PencilIcon, CheckIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { TrashIcon, PencilIcon, CheckIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { useFeatureFlag } from '@core/hooks/useFeatureFlag';
 import { FeatureFlags } from '@core/config/featureFlags';
 import { Todo } from '@features/todo/domain/Todo';
@@ -139,7 +139,8 @@ export const TodoList: React.FC = () => {
             placeholder="Add a new task..."
             className={cn(
               "flex-grow p-3 rounded-l-lg focus:outline-none",
-              useNeumorphism ? "input-neumorph" : "border border-[#e2e8f0] dark:border-[#334155] dark:bg-[#0f172a] dark:text-white"
+              useNeumorphism ? "input-neumorph" : 
+              "border border-[#e2e8f0] dark:border-[#334155] dark:bg-[#0f172a] dark:text-white"
             )}
           />
         </div>

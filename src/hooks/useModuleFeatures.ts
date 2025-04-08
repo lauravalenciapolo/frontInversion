@@ -23,7 +23,10 @@ const defaultFeatures: ModuleFeatures = {
   [FeatureFlags.SETTINGS_MODULE]: true,
   [FeatureFlags.ADMIN_MODULE]: true,
   [FeatureFlags.REPORTS_MODULE]: false,
-  [FeatureFlags.INVESTMENT_ORDER]: true,
+  [FeatureFlags.INVESTMENT_ORDER_MODULE]: true,
+  [FeatureFlags.INVESTMENT_ORDER_DAY_OPERATIONS]: true,
+  [FeatureFlags.INVESTMENT_ORDER_FIXED_INCOME]: true,
+  [FeatureFlags.INVESTMENT_ORDER_VARIABLE_INCOME]: true,
   neumorphism: true,  // Propiedad específica para mantener compatibilidad
 };
 

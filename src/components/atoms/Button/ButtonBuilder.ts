@@ -1,5 +1,5 @@
-import { ButtonHTMLAttributes, ReactNode } from 'react';
-import { ButtonProps, ButtonSize, ButtonVariant } from './Button.types';
+import { ButtonHTMLAttributes, ReactNode } from "react";
+import { ButtonProps, ButtonSize, ButtonVariant } from "./Button.types";
 
 // Interfaz para las props del botón
 export interface IButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -132,7 +132,9 @@ export class ButtonBuilder {
   /**
    * Establece el manejador de eventos onClick
    */
-  setOnClick(onClick: ButtonHTMLAttributes<HTMLButtonElement>['onClick']): ButtonBuilder {
+  setOnClick(
+    onClick: ButtonHTMLAttributes<HTMLButtonElement>["onClick"]
+  ): ButtonBuilder {
     this.props.onClick = onClick;
     return this;
   }
@@ -140,7 +142,9 @@ export class ButtonBuilder {
   /**
    * Establece el manejador de eventos onClick (alias para compatibilidad con tests)
    */
-  withOnClick(onClick: ButtonHTMLAttributes<HTMLButtonElement>['onClick']): ButtonBuilder {
+  withOnClick(
+    onClick: ButtonHTMLAttributes<HTMLButtonElement>["onClick"]
+  ): ButtonBuilder {
     return this.setOnClick(onClick);
   }
 
@@ -179,7 +183,7 @@ export class ButtonBuilder {
    */
   build(): Partial<ButtonProps> {
     if (!this.props.children) {
-      throw new Error('Button must have children');
+      throw new Error("Button must have children");
     }
     return this.props;
   }

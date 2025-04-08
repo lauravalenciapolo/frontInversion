@@ -16,7 +16,8 @@ export enum FeatureFlags {
   SETTINGS_MODULE = 'SETTINGS_MODULE',
   ADMIN_MODULE = 'ADMIN_MODULE',
   REPORTS_MODULE = 'REPORTS_MODULE',
-  
+  INVESTMENT_ORDER_MODULE = 'INVESTMENT_ORDER_MODULE',
+
   // Submódulos y características específicas
   USER_PROFILES = 'USER_PROFILES',
   USER_ROLES = 'USER_ROLES',
@@ -24,7 +25,9 @@ export enum FeatureFlags {
   SECURITY_SETTINGS = 'SECURITY_SETTINGS',
   NOTIFICATIONS = 'NOTIFICATIONS',
   ADVANCED_SECURITY = 'ADVANCED_SECURITY',
-  INVESTMENT_ORDER = 'INVESTMENT_ORDER',
+  INVESTMENT_ORDER_DAY_OPERATIONS = 'INVESTMENT_ORDER_DAY_OPERATIONS',
+  INVESTMENT_ORDER_FIXED_INCOME = 'INVESTMENT_ORDER_FIXED_INCOME',
+  INVESTMENT_ORDER_VARIABLE_INCOME = 'INVESTMENT_ORDER_VARIABLE_INCOME',
 
 }
 
@@ -44,6 +47,7 @@ const defaultFeatureFlags: Record<FeatureFlags, boolean> = {
   [FeatureFlags.SETTINGS_MODULE]: true,
   [FeatureFlags.ADMIN_MODULE]: true,
   [FeatureFlags.REPORTS_MODULE]: false, // Reportes desactivado por defecto
+  [FeatureFlags.INVESTMENT_ORDER_MODULE]: true, 
   
   // Submódulos específicos
   [FeatureFlags.USER_PROFILES]: true,
@@ -52,7 +56,9 @@ const defaultFeatureFlags: Record<FeatureFlags, boolean> = {
   [FeatureFlags.SECURITY_SETTINGS]: true,
   [FeatureFlags.NOTIFICATIONS]: true,
   [FeatureFlags.ADVANCED_SECURITY]: false, // Seguridad avanzada desactivada por defecto
-  [FeatureFlags.INVESTMENT_ORDER]: true,
+  [FeatureFlags.INVESTMENT_ORDER_DAY_OPERATIONS]: true,
+  [FeatureFlags.INVESTMENT_ORDER_FIXED_INCOME]: true,
+  [FeatureFlags.INVESTMENT_ORDER_VARIABLE_INCOME]: true,
 };
 
 // Estructura de datos para el panel de administración de feature flags
@@ -168,13 +174,35 @@ export const featureFlags = [
     group: 'Core'
   },
   {
-    name: FeatureFlags.INVESTMENT_ORDER,
+    name: FeatureFlags.INVESTMENT_ORDER_MODULE,
     description: 'Módulo para gestionar órdenes de inversión (compra/venta)',
-    enabled: defaultFeatureFlags[FeatureFlags.INVESTMENT_ORDER],
+    enabled: defaultFeatureFlags[FeatureFlags.INVESTMENT_ORDER_MODULE],
     requiresAuth: true,
     permissions: ["admin","finance-manager"],
     group: 'Core',
-    subFeatures: []
+    subFeatures: [
+      {
+      name: FeatureFlags.INVESTMENT_ORDER_DAY_OPERATIONS,
+      description: 'Visualizar operaciones de compra/venta de acciones',
+      enabled: defaultFeatureFlags[FeatureFlags.INVESTMENT_ORDER_DAY_OPERATIONS],
+      requiresAuth: true,
+      permissions: ['admin', 'user-manager']
+    },
+    {
+      name: FeatureFlags.INVESTMENT_ORDER_FIXED_INCOME,
+      description: 'Crear órdenes de inversión en renta fija',
+      enabled: defaultFeatureFlags[FeatureFlags.INVESTMENT_ORDER_FIXED_INCOME],
+      requiresAuth: true,
+      permissions: ['admin']
+    },
+    {
+      name: FeatureFlags.INVESTMENT_ORDER_VARIABLE_INCOME,
+      description: 'Crear órdenes de inversión en renta variable',
+      enabled: defaultFeatureFlags[FeatureFlags.INVESTMENT_ORDER_VARIABLE_INCOME],
+      requiresAuth: true,
+      permissions: ['admin']
+    }
+  ]
   }
 ];
 

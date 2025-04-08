@@ -31,10 +31,30 @@ export const menuItems: MenuItem[] = [
     featureFlag: FeatureFlags.TODO_MODULE
   },
   {
-    label: 'Investment Order',
-    path: '/investment-order',
+    label: 'Investment Orders',
+    path: '/investment-orders',
     icon: <BanknotesIcon />,
-    featureFlag: FeatureFlags.INVESTMENT_ORDER
+    featureFlag: FeatureFlags.INVESTMENT_ORDER_MODULE,
+    children: [
+      {
+        label: 'Day Operations',
+        path: '/investment-orders/day-operations',
+        icon: <BanknotesIcon />,
+        featureFlag: FeatureFlags.INVESTMENT_ORDER_DAY_OPERATIONS
+      },
+      {
+        label: 'Fixed Income',
+        path: '/investment-orders/fixed-income',
+        icon: <BanknotesIcon />,
+        featureFlag: FeatureFlags.INVESTMENT_ORDER_FIXED_INCOME
+      },
+      {
+        label: 'Variable Income',
+        path: '/investment-orders/variable-income',
+        icon: <BanknotesIcon />,
+        featureFlag: FeatureFlags.INVESTMENT_ORDER_VARIABLE_INCOME
+      },
+    ]
   },
   {
     label: 'Users',
