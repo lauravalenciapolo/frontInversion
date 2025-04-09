@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { InvestmentOrderEntity } from '@/modules/orders/features/domain/entities/InvestmentOrderEntity';
+import { InvestmentOrder, InvestmentOrderEntity } from '@/modules/orders/features/domain/entities/InvestmentOrderEntity';
 import { InvestmentOrderRepository } from '@/modules/orders/features/domain/repositories/InvestmentOrderRepository';
 // import { InvestmentOrderRepository, MockInvestmentOrderRepository } from '../../domain/repositories/InvestmentOrderRepository';
 import { CloudflareWorkerRepository } from '@/modules/orders/features/infrastructure/CloudflareWorkerRepository';
@@ -29,7 +29,18 @@ export const useInvestmentOrder = () => {
     try {
       setLoading(true);
       setError(null);
-      const newItem = await repository.create(data);
+      const newItem = InvestmentOrder.create({
+        ...data,
+        id: "1158uui",
+        type: "investment-order",
+        status: "PENDING",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        executedAt: new Date(),
+      });
+
+      // const newItem = await repository.create(data);
+      localStorage.setItem("investmentOrder", JSON.stringify(newItem));
       setItems(current => [...current, newItem]);
       return newItem;
     } catch (err) {
@@ -79,3 +90,4 @@ export const useInvestmentOrder = () => {
     deleteItem
   };
 };
+

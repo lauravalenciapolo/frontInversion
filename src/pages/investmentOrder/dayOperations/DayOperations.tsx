@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useInvestmentOrder } from "@/modules/orders/features/application/hook/useInvestmentOrder";
 import { useEffect } from "react";
 import { InvestmentOrderEntity } from "@/modules/orders/features/domain/entities/InvestmentOrderEntity";
@@ -10,10 +11,16 @@ export const DayOperations = () => {
   const { items, loading, error, fetchItems, updateItem, } =
     useInvestmentOrder();
   const useNeumorphism = isFeatureEnabled(FeatureFlags.USE_NEUMORPHISM);
+  const [items2, setItems2] = useState<InvestmentOrderEntity[]>([]);
 
   useEffect(() => {
     fetchItems();
   }, [fetchItems]);
+
+  useEffect(() => {
+    const newItems = localStorage.getItem("investmentOrder");
+    setItems2([...items, newItems ? JSON.parse(newItems) : null]);
+  }, [items]);
 
   const handleStatusChange = async (
     id: string,
@@ -39,12 +46,12 @@ export const DayOperations = () => {
         title="Órdenes del Día"
       />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {items.length === 0 ? (
+        {items2.length === 0 ? (
           <div className="col-span-2 text-center py-8 text-gray-500">
             No hay órdenes. Crea una nueva orden para comenzar.
           </div>
         ) : (
-          items.map((order) => {
+          items2.map((order) => {
             // Uso del builder para cada tarjeta
             const cardProps = new OrderCardBuilder()
               .setOrder(order)

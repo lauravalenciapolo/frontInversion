@@ -168,8 +168,8 @@ export const OrderFormFixedIncome = ({
       }
     >
       <Select {...operationSelect} />
-      <Select {...portfolioSelect} />
-      <Select {...brokerSelect} />
+      {/* <Select {...portfolioSelect} />
+      <Select {...brokerSelect} /> */}
       <Input {...symbolInput} />
       <Input {...quantityInput} />
       <Input {...priceInput} />
