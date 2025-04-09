@@ -19,7 +19,11 @@ export const DayOperations = () => {
 
   useEffect(() => {
     const newItems = localStorage.getItem("investmentOrder");
-    setItems2([...items, newItems ? JSON.parse(newItems) : null]);
+    if(newItems && items.length > 0) {
+      setItems2([...items, JSON.parse(newItems)]);
+    } else {
+      setItems2(items);
+    }
   }, [items]);
 
   const handleStatusChange = async (
@@ -38,7 +42,6 @@ export const DayOperations = () => {
     );
   if (error) return <div className="text-red-600">{error.message}</div>;
 
-  console.log(items2, "items2");
 
   return (
     <div className="p-2">
@@ -54,7 +57,6 @@ export const DayOperations = () => {
           </div>
         ) : (
           items2.map((order) => {
-            console.log(order, "order");
             // Uso del builder para cada tarjeta
             const cardProps = new OrderCardBuilder()
               .setOrder(order)
