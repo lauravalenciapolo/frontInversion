@@ -48,7 +48,7 @@ export const Dashboard = () => {
           useNeumorphism ? "shadow-neumorph" : "bg-white dark:bg-gray-800 shadow"
         )}>
           <h2 className="text-lg font-medium dark:text-white mb-4">Usage Overview</h2>
-          <div className="aspect-[3/1] bg-gray-100 dark:bg-gray-700 rounded flex items-center justify-center">
+          <div className="aspect-[3/2] bg-gray-100 dark:bg-gray-700 rounded flex items-center justify-center">
             <DonutChart />
           </div>
         </div>
