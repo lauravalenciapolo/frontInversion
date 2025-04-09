@@ -4,9 +4,11 @@ export class ApiConfig {
     private readonly apiUrl: string;
   
     private constructor() {
-      this.apiUrl = import.meta.env.DEV 
-        ? 'http://localhost:8787' 
-        : 'https://reacttemplate-api.lauravalenciapolo.workers.dev';
+      this.apiUrl = 
+      // import.meta.env.DEV 
+      //   ? 'http://localhost:8787' 
+      //   : 
+        'https://reacttemplate-api.lauravalenciapolo.workers.dev';
     }
   
     static getInstance(): ApiConfig {
