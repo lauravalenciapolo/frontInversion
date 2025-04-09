@@ -1,3 +1,4 @@
+import { DonutChart } from '@/components/organisms/DonutChart/DonutChart';
 import { isFeatureEnabled, FeatureFlags } from '@core/config/featureFlags';
 import { cn } from '@core/utils/cn';
 
@@ -47,8 +48,8 @@ export const Dashboard = () => {
           useNeumorphism ? "shadow-neumorph" : "bg-white dark:bg-gray-800 shadow"
         )}>
           <h2 className="text-lg font-medium dark:text-white mb-4">Usage Overview</h2>
-          <div className="aspect-[4/3] bg-gray-100 dark:bg-gray-700 rounded flex items-center justify-center">
-            <p className="text-gray-500 dark:text-gray-400">Chart Placeholder</p>
+          <div className="aspect-[3/1] bg-gray-100 dark:bg-gray-700 rounded flex items-center justify-center">
+            <DonutChart />
           </div>
         </div>
         

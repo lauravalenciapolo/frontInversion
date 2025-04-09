@@ -1,7 +1,7 @@
 var __defProp = Object.defineProperty;
 var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
 
-// .wrangler/tmp/bundle-R28ULk/checked-fetch.js
+// .wrangler/tmp/bundle-rG6ny4/checked-fetch.js
 var urls = /* @__PURE__ */ new Set();
 function checkURL(request, init) {
   const url = request instanceof URL ? request : new URL(
@@ -79,6 +79,18 @@ var sampleOrders = [
     updatedAt: "2023-06-14T11:20:00Z",
     notes: "Venta cancelada por volatilidad del mercado",
     userId: "user456"
+  },
+  {
+    id: "4",
+    symbol: "AAPL",
+    quantity: 10,
+    price: 205.92,
+    orderType: "BUY",
+    status: "COMPLETED",
+    createdAt: "2023-06-15T10:30:00Z",
+    updatedAt: "2023-06-15T10:35:00Z",
+    notes: "N.A",
+    userId: "user555"
   }
 ];
 function handleGetOrders() {
@@ -142,7 +154,7 @@ async function handleLogin(request) {
     const token = btoa(`${user.id}:${user.email}`);
     return new Response(JSON.stringify({
       success: true,
-      data: { token, user: { id: user.id, email: user.email, name: user.name } }
+      data: { token, id: user.id, email: user.email, name: user.name }
     }), {
       status: 200,
       headers: { "Content-Type": "application/json", ...corsHeaders }
@@ -225,7 +237,7 @@ var jsonError = /* @__PURE__ */ __name(async (request, env, _ctx, middlewareCtx)
 }, "jsonError");
 var middleware_miniflare3_json_error_default = jsonError;
 
-// .wrangler/tmp/bundle-R28ULk/middleware-insertion-facade.js
+// .wrangler/tmp/bundle-rG6ny4/middleware-insertion-facade.js
 var __INTERNAL_WRANGLER_MIDDLEWARE__ = [
   middleware_ensure_req_body_drained_default,
   middleware_miniflare3_json_error_default
@@ -257,7 +269,7 @@ function __facade_invoke__(request, env, ctx, dispatch, finalMiddleware) {
 }
 __name(__facade_invoke__, "__facade_invoke__");
 
-// .wrangler/tmp/bundle-R28ULk/middleware-loader.entry.ts
+// .wrangler/tmp/bundle-rG6ny4/middleware-loader.entry.ts
 var __Facade_ScheduledController__ = class {
   constructor(scheduledTime, cron, noRetry) {
     this.scheduledTime = scheduledTime;

@@ -24,7 +24,7 @@ export async function handleLogin(request: Request) {
 
     const token = btoa(`${user.id}:${user.email}`);
     return new Response(JSON.stringify({ success: true, 
-        data:{token, user: { id: user.id, email: user.email, name: user.name }}}), {
+        data:{token, id: user.id, email: user.email, name: user.name }}), {
       status: 200,
       headers: { 'Content-Type': 'application/json', ...corsHeaders }
     });

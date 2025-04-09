@@ -16,7 +16,7 @@ export const DashboardLayout = () => {
       )}
     >
       {/* Header */}
-      <header className="w-full border-b border-neutral py-3 bg-white dark:bg-gray-800 dark:border-gray-700 sticky top-0 z-10">
+      <header className="w-full border-b border-neutral py-3 bg-white dark:bg-gray-800 dark:border-gray-700">
         <div className="container mx-auto px-4 flex justify-between items-center">
             <h1 className="text-xl font-bold dark:text-white">
               React Functional Template

@@ -77,7 +77,6 @@ export const NavigationMenu = ({
   const renderMenuItem = (item: MenuItem) => {
     // Filter subitems based on feature flags
     const filteredSubItems = item.children?.filter(filterItem) || [];
-
     const hasSubItems = filteredSubItems.length > 0;
     const isItemActive = isActive(item.path || "");
     const isSubmenuExpanded = expandedSubmenus.includes(item.path || "");
@@ -111,9 +110,14 @@ export const NavigationMenu = ({
             className="flex items-center gap-2 flex-1"
             onClick={(e) => hasSubItems && e.preventDefault()}
           >
-            {item.icon && <span className="w-5 h-5">{item.icon}</span>}
+            {item.icon && (
+              <span className={cn("w-5 h-5", isItemActive && "text-[--primary-500]")}>{item.icon}</span>
+            )}
             {isExpanded && (
-              <span className="font-medium text-sm">{item.label}</span>
+              <span className={cn(
+                "font-medium text-sm",
+                isItemActive || hasActiveChild ? "text-[--primary-500]" : ""
+              )}>{item.label}</span>
             )}
           </Link>
 
@@ -137,7 +141,10 @@ export const NavigationMenu = ({
                 : "max-h-0 opacity-0"
             )}
           >
-            {filteredSubItems.map((subItem) => (
+          {filteredSubItems.map((subItem) => {
+            const isSubItemActive = isActive(subItem.path || "");
+
+            return (
               <Link
                 key={subItem.path}
                 to={subItem.path || "#"}
@@ -150,11 +157,15 @@ export const NavigationMenu = ({
                 )}
               >
                 {subItem.icon && (
-                  <span className="w-4 h-4">{subItem.icon}</span>
+                  <span className={cn("w-4 h-4", isSubItemActive && "text-[--primary-500]")}>
+                    {subItem.icon}
+                  </span>
                 )}
-                {isExpanded && <span>{subItem.label}</span>}
+                {isExpanded && <span className={cn("font-medium text-sm", isSubItemActive && "text-[--primary-500]")}>{subItem.label}</span>}
               </Link>
-            ))}
+            );
+          })}
+
           </div>
         )}
       </div>

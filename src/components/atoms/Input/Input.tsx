@@ -23,7 +23,7 @@ export const Input: React.FC<InputProps> = ({
   };
 
   const variantStyles: Record<string, string> = {
-    default: "bg-white dark:bg-gray-800",
+    default: "dark:bg-gray-800",
     outline: "border border-gray-300 focus:ring-primary-500",
     filled: "bg-gray-100 dark:bg-gray-700",
     ghost: "bg-transparent",

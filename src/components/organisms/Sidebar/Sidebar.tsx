@@ -4,7 +4,7 @@ import { useAuthStore } from "@modules/auth/features/login/application/store/use
 import { SidebarProps } from './Sidebar.types';
 import { Button } from "@/components/atoms/Button";
 import { NavigationMenu } from "@/components/molecules/NavigationMenu/NavigationMenu";
-// Icons
+
 export const Sidebar: React.FC<SidebarProps> = ({sidebarOpen, setSidebarOpen}) => {
   const useNeumorphism = isFeatureEnabled(FeatureFlags.USE_NEUMORPHISM);
   const { user } = useAuthStore();

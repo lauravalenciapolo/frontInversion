@@ -5,9 +5,9 @@ import {
   UserIcon,
   Cog6ToothIcon as CogIcon,
   ShieldCheckIcon,
-  ListBulletIcon as ListTaskIcon,
+  DocumentCheckIcon as ListTaskIcon,
   ChartBarIcon,
-  BellIcon,
+  // BellIcon,
   UserGroupIcon,
   KeyIcon,
   AdjustmentsHorizontalIcon as AdjustmentsIcon,
@@ -116,10 +116,10 @@ export const menuItems: MenuItem[] = [
     icon: <ChartBarIcon />,
     featureFlag: FeatureFlags.REPORTS_MODULE
   },
-  {
-    label: 'Notifications',
-    path: '/notifications',
-    icon: <BellIcon />,
-    featureFlag: FeatureFlags.NOTIFICATIONS
-  }
+  // {
+  //   label: 'Notifications',
+  //   path: '/notifications',
+  //   icon: <BellIcon />,
+  //   featureFlag: FeatureFlags.NOTIFICATIONS
+  // }
 ]; 

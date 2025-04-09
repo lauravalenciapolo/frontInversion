@@ -37,7 +37,19 @@ const sampleOrders = [
     updatedAt: '2023-06-14T11:20:00Z',
     notes: 'Venta cancelada por volatilidad del mercado',
     userId: 'user456'
-  }
+  },
+  {
+    id: '4',
+    symbol: 'AAPL',
+    quantity: 10,
+    price: 205.92,
+    orderType: 'BUY',
+    status: 'COMPLETED',
+    createdAt: '2023-06-15T10:30:00Z',
+    updatedAt: '2023-06-15T10:35:00Z',
+    notes: 'N.A',
+    userId: 'user555'
+  },
 ];
 
 export function handleGetOrders() {

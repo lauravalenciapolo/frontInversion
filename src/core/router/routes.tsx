@@ -17,6 +17,7 @@ import { FeatureFlagsAdmin } from "@/pages/admin/FeatureFlagsAdmin";
 import DayOperations from "@/pages/investmentOrder/dayOperations/DayOperations";
 import FixedIncomeOrder from "@/pages/investmentOrder/fixedIncomeOrder/FixedIncomeOrder";
 import VariableIncomeOrder from "@/pages/investmentOrder/variableIncomeOrder/VariableIncomeOrder";
+import { Dashboard } from "@/pages/dashboard/Dashboard";
 
 export const routes: RouteObject[] = [
   {
@@ -32,6 +33,10 @@ export const routes: RouteObject[] = [
           />
         ),
         children: [
+          {
+            index: true,
+            element: <Dashboard />, // Este se muestra en "/"
+          },
           {
             path: "todo",
             element: (
