@@ -2,6 +2,11 @@ name = "reacttemplate-api"
 main = "src/index.ts"
 compatibility_date = "2024-03-29"
 
+[[kv_namespaces]]
+binding = "USERS"
+id = "fd4f250048264759ba7d44111df6df37"        # ← el namespace de producción
+preview_id = "174874857a28460fbe5bf69d2bb866fb" # ← el namespace de desarrollo
+
 # Configuración para desarrollo local
 [dev]
 port = 8787
@@ -15,3 +20,4 @@ custom_domain = "api.reacttemplate.pages.dev"
 # Configuración para compilación - TypeScript está gestionado por Workers
 [build]
 command = "npm run build" 
+

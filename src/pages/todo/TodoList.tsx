@@ -1,6 +1,6 @@
 import { Todo } from '@components/Todo';
 import { isFeatureEnabled, FeatureFlags } from '../../core/config/featureFlags';
-import { cn } from '../../core/utils/cn';
+import { cn } from '@/utils/cn';
 
 export const TodoList = () => {
   const useNeumorphism = isFeatureEnabled(FeatureFlags.USE_NEUMORPHISM);

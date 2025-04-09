@@ -1,28 +1,10 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { 
   FeatureFlags, 
   isFeatureEnabled, 
   subscribeToFeatureFlags 
 } from '../config/featureFlags';
 
-/**
- * Hook personalizado para usar feature flags en componentes de forma reactiva
- * Se actualizará automáticamente cuando cambie el estado del feature flag
- * 
- * @param flag - El feature flag a verificar
- * @returns - Un boolean que indica si el feature está habilitado
- * 
- * @example
- * // Uso básico
- * const isFeatureEnabled = useFeatureFlag(FeatureFlags.USE_NEUMORPHISM);
- * 
- * // En un componente condicional
- * if (isFeatureEnabled) {
- *   return <NeumorphicComponent />;
- * } else {
- *   return <StandardComponent />;
- * }
- */
 export function useFeatureFlag(flag: FeatureFlags): boolean {
   const [enabled, setEnabled] = useState(() => isFeatureEnabled(flag));
 
@@ -33,7 +15,6 @@ export function useFeatureFlag(flag: FeatureFlags): boolean {
         setEnabled(newValue);
       }
     });
-
     // Limpiar suscripción al desmontar
     return () => unsubscribe();
   }, [flag]);
@@ -41,19 +22,6 @@ export function useFeatureFlag(flag: FeatureFlags): boolean {
   return enabled;
 }
 
-/**
- * Hook para verificar múltiples feature flags a la vez
- * 
- * @param flags - Array de feature flags a verificar
- * @returns - Objeto con los estados de todos los feature flags
- * 
- * @example
- * // Verificar múltiples flags
- * const { useNeumorphism, enableDarkMode } = useFeatureFlags([
- *   FeatureFlags.USE_NEUMORPHISM,
- *   FeatureFlags.ENABLE_DARK_MODE
- * ]);
- */
 export function useFeatureFlags(flags: FeatureFlags[]): Record<FeatureFlags, boolean> {
   const [enabledFlags, setEnabledFlags] = useState<Record<FeatureFlags, boolean>>(() => {
     return flags.reduce((acc, flag) => {

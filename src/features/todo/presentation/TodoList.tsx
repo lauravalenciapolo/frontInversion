@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect, useCallback } from 'react';
-import { cn } from '@core/utils/cn';
+import { cn } from '@/utils/cn';
 import { TrashIcon, PencilIcon, CheckIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { useFeatureFlag } from '@core/hooks/useFeatureFlag';
 import { FeatureFlags } from '@core/config/featureFlags';

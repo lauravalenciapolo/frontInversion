@@ -8,10 +8,6 @@ interface FeatureProtectedRouteProps {
   fallbackPath?: string;
 }
 
-/**
- * A component that protects routes based on feature flags
- * If feature is not enabled, redirects to fallback path or dashboard
- */
 export const FeatureProtectedRoute = ({ 
   children, 
   featureFlag,
@@ -25,4 +21,4 @@ export const FeatureProtectedRoute = ({
   }
 
   return <>{children}</>;
-}; 
+};

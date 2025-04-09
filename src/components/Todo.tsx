@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { isFeatureEnabled, FeatureFlags } from "../utils/featureFlags";
+import { isFeatureEnabled, FeatureFlags } from "@utils/featureFlags";
 import { cn } from "@utils/cn";
 import { InputBuilder } from "@components/atoms/Input/InputBuilder";
-import { Input } from "@components/atoms/Input/Input";
+import { Input } from "@components/atoms/Input";
 import { ButtonBuilder } from "./atoms/Button/ButtonBuilder";
 import { Button } from "./atoms/Button";
 

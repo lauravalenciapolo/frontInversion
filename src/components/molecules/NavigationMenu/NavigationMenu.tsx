@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { cn } from "@/core/utils/cn";
+import { cn } from "@utils/cn";
 import { ChevronDown } from "lucide-react";
 import { MenuItem } from "@/core/types";
 import {
@@ -40,16 +40,13 @@ export const NavigationMenu = ({
       const filtered = menuItems.filter(filterItem);
       setFilteredItems(filtered);
     };
-
     // Filtrar inicialmente
     filterMenuItems();
-
     // Suscribirse a los cambios en los feature flags
     const unsubscribe = subscribeToFeatureFlags(() => {
       // Re-filtrar los elementos del menú cuando cambia cualquier flag
       filterMenuItems();
     });
-
     // Limpiar la suscripción cuando se desmonta el componente
     return () => {
       unsubscribe();
@@ -61,9 +58,7 @@ export const NavigationMenu = ({
 
   // Función para verificar si una ruta está activa
   const isActive = (path: string) => {
-    if (path === "/") {
-      return location.pathname === "/";
-    }
+    if (path === "/") location.pathname === "/";
     return location.pathname.startsWith(path);
   };
 

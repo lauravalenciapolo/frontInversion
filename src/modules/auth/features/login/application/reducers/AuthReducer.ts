@@ -1,4 +1,4 @@
-import { AuthState, AuthEvent, LoginCommand } from "@/modules/auth/features/login/domain/entities/AuthEntity";
+import { AuthState, AuthEvent, LoginCommand } from "@/modules/auth/features/domain/entities/AuthEntity";
 
 const validateLoginCommand = (command: LoginCommand): string | null => {
   if (!command.email) return "Email is required";

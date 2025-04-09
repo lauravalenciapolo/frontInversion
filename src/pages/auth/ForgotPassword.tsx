@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button } from '@components/atoms/Button/Button';
 import { ButtonBuilder } from '@components/atoms/Button/ButtonBuilder';
 import { isFeatureEnabled, FeatureFlags } from '@core/config/featureFlags';
-import { cn } from '@core/utils/cn';
+import { cn } from '@/utils/cn';
 
 export const ForgotPassword = () => {
   const [email, setEmail] = useState('');

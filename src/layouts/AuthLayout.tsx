@@ -1,6 +1,6 @@
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { isFeatureEnabled, FeatureFlags } from "../utils/featureFlags";
-import { cn } from "../utils/cn";
+import { cn } from "@/utils/cn";
 import { Button } from "@/components/atoms/Button";
 import { ButtonBuilder } from "@/components/atoms/Button/ButtonBuilder";
 

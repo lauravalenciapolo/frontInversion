@@ -1,6 +1,6 @@
 import { ButtonBuilder } from "@/components/atoms/Button/ButtonBuilder";
 import { Button } from "@/components/atoms/Button/Button";
-import { cn } from "@/core/utils/cn";
+import { cn } from "@/utils/cn";
 import { OrderCardBuilder } from "./OrderCardBuilder";
 
 export const OrderCard = ({

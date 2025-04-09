@@ -1,5 +1,5 @@
 import { isFeatureEnabled, FeatureFlags } from '@core/config/featureFlags';
-import { cn } from '@core/utils/shadcn';
+import { cn } from '@/utils/cn';
 
 export const Analytics = () => {
   const useNeumorphism = isFeatureEnabled(FeatureFlags.USE_NEUMORPHISM);

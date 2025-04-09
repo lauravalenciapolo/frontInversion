@@ -5,10 +5,10 @@ import {
   featureFlags, 
   updateFeatures
 } from '@core/config/featureFlags';
-import { cn } from '@core/utils/cn';
+import { cn } from '@/utils/cn';
 import { ButtonBuilder } from '@components/atoms/Button/ButtonBuilder';
 import { Button } from '@components/atoms/Button/Button';
-import { InputCheckbox } from '@/components/atoms/InputCheckbox/InputCheckbox';
+import { InputCheckbox } from '@/components/atoms/InputCheckbox';
 import { InputCheckboxBuilder } from '@/components/atoms/InputCheckbox/InputCheckboxBuilder';
 
 interface FeatureFlagToggleProps {

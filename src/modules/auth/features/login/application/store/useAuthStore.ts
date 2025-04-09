@@ -1,7 +1,7 @@
 import { create } from "zustand";
-import { AuthState, LoginCommand } from "@/modules/auth/features/login/domain/entities/AuthEntity";
-import { AuthRepository } from "@/modules/auth/features/login/domain/repositories/AuthRepository";
-import { CloudflareAuthRepository } from "@/modules/auth/features/login/infrastructure/CloudflareAuthRepository";
+import { AuthState, LoginCommand } from "@/modules/auth/features/domain/entities/AuthEntity";
+import { AuthRepository } from "@/modules/auth/features/domain/repositories/AuthRepository";
+import { CloudflareAuthRepository } from "@/modules/auth/features/infrastructure/CloudflareAuthRepository";
 import {
   authReducer,
   validateLoginCommand,

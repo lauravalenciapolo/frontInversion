@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "@/components/atoms/Button";
-import { cn } from "@/core/utils/cn";
+import { cn } from "@/utils/cn";
 import { RefreshCcw } from "lucide-react";
 import { ButtonBuilder } from "@/components/atoms/Button/ButtonBuilder";
 

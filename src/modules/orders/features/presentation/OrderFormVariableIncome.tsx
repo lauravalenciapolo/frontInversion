@@ -5,10 +5,10 @@ import { useAuthStore } from "@modules/auth/features/login/application/store/use
 import { InvestmentOrderEntity } from "@modules/orders/features/domain/entities/InvestmentOrderEntity";
 import BaseForm from "@components/molecules/BaseForm/BaseForm";
 import { InputBuilder } from "@/components/atoms/Input/InputBuilder";
-import { Input } from "@/components/atoms/Input/Input";
+import { Input } from "@/components/atoms/Input";
 import { SelectBuilder } from "@/components/atoms/Select/SelectBuilder";
-import Select from "@/components/atoms/Select/Select";
-import Textarea from "@/components/atoms/Textarea/Textarea";
+import { Select } from "@/components/atoms/Select";
+import {Textarea} from "@/components/atoms/Textarea";
 import { TextareaBuilder } from "@/components/atoms/Textarea/TextareaBuilder";
 
 type OrderFormVariableIncomeProps = {

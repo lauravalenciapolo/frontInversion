@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { isFeatureEnabled, FeatureFlags } from "../core/config/featureFlags";
-import { cn } from "../core/utils/shadcn";
+import { cn } from "@utils/cn";
 import { useTheme } from "../core/theme/ThemeProvider";
 
 export const DashboardLayout = () => {
