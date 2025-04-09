@@ -38,6 +38,8 @@ export const DayOperations = () => {
     );
   if (error) return <div className="text-red-600">{error.message}</div>;
 
+  console.log(items2, "items2");
+
   return (
     <div className="p-2">
       <InvestmentOrderHeader
@@ -52,6 +54,7 @@ export const DayOperations = () => {
           </div>
         ) : (
           items2.map((order) => {
+            console.log(order, "order");
             // Uso del builder para cada tarjeta
             const cardProps = new OrderCardBuilder()
               .setOrder(order)
