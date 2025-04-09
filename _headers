@@ -1,2 +1,2 @@
-/* 
-  Content-Security-Policy: default-src 'self'; connect-src 'self' https://api.reacttemplate.pages.dev https://*.pages.dev; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:;
+/*
+  Content-Security-Policy: default-src 'self' https://reacttemplate-api.lauravalenciapolo.workers.dev; connect-src 'self' https://api.reacttemplate.pages.dev; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:;
