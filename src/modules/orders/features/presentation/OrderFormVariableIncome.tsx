@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/atoms/Button/Button";
 import { ButtonBuilder } from "@/components/atoms/Button/ButtonBuilder";
 import { useAuthStore } from "@modules/auth/features/login/application/store/useAuthStore";
-import { InvestmentOrderEntity } from "@modules/orders/features/domain/entities/InvestmentOrderEntity";
+import { InvestmentOrderEntity } from "@/modules/orders/features/domain/entities/OrderEntity";
 import BaseForm from "@components/molecules/BaseForm/BaseForm";
 import { InputBuilder } from "@/components/atoms/Input/InputBuilder";
 import { Input } from "@/components/atoms/Input";

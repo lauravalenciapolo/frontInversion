@@ -1,7 +1,7 @@
 var __defProp = Object.defineProperty;
 var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
 
-// .wrangler/tmp/bundle-D8bTBy/checked-fetch.js
+// .wrangler/tmp/bundle-1SQEZ3/checked-fetch.js
 var urls = /* @__PURE__ */ new Set();
 function checkURL(request, init) {
   const url = request instanceof URL ? request : new URL(
@@ -42,72 +42,53 @@ function handleOptions() {
 }
 __name(handleOptions, "handleOptions");
 
-// src/handlers/order.ts
-var sampleOrders = [
-  {
-    id: "1",
-    symbol: "AAPL",
-    quantity: 10,
-    price: 185.92,
-    orderType: "BUY",
-    status: "COMPLETED",
-    createdAt: "2023-06-15T10:30:00Z",
-    updatedAt: "2023-06-15T10:35:00Z",
-    notes: "Compra estrat\xE9gica para cartera de largo plazo",
-    userId: "user123"
-  },
-  {
-    id: "2",
-    symbol: "MSFT",
-    quantity: 5,
-    price: 420.45,
-    orderType: "BUY",
-    status: "PENDING",
-    createdAt: "2023-06-16T14:20:00Z",
-    updatedAt: null,
-    notes: null,
-    userId: "user123"
-  },
-  {
-    id: "3",
-    symbol: "TSLA",
-    quantity: 3,
-    price: 177.5,
-    orderType: "SELL",
-    status: "CANCELLED",
-    createdAt: "2023-06-14T09:15:00Z",
-    updatedAt: "2023-06-14T11:20:00Z",
-    notes: "Venta cancelada por volatilidad del mercado",
-    userId: "user456"
-  },
-  {
-    id: "4",
-    symbol: "AAPL",
-    quantity: 10,
-    price: 205.92,
-    orderType: "BUY",
-    status: "COMPLETED",
-    createdAt: "2023-06-15T10:30:00Z",
-    updatedAt: "2023-06-15T10:35:00Z",
-    notes: "N.A",
-    userId: "user555"
+// src/handlers/order/order.ts
+async function handleGetOrders(env) {
+  try {
+    const listResponse = await env.ORDERS.list();
+    const orders = await Promise.all(
+      listResponse.keys.map(async (key) => {
+        const value = await env.ORDERS.get(key.name);
+        return value ? JSON.parse(value) : null;
+      })
+    );
+    return new Response(JSON.stringify({
+      success: true,
+      data: orders.filter(Boolean)
+      // elimina nulos
+    }), {
+      headers: {
+        "Content-Type": "application/json",
+        ...corsHeaders
+      }
+    });
+  } catch (error) {
+    return new Response(JSON.stringify({ success: false, error: "Error al obtener las \xF3rdenes" }), {
+      status: 500,
+      headers: {
+        "Content-Type": "application/json",
+        ...corsHeaders
+      }
+    });
   }
-];
-function handleGetOrders() {
-  return new Response(JSON.stringify({
-    success: true,
-    data: sampleOrders
-  }), {
-    headers: {
-      "Content-Type": "application/json",
-      ...corsHeaders
-    }
-  });
 }
 __name(handleGetOrders, "handleGetOrders");
-function handleGetOrderById(orderId) {
-  const order = sampleOrders.find((o) => o.id === orderId);
-  if (order) {
+async function handleGetOrderById(orderId, env) {
+  try {
+    const orderRaw = await env.ORDERS.get(orderId);
+    if (!orderRaw) {
+      return new Response(JSON.stringify({
+        success: false,
+        error: "Orden no encontrada"
+      }), {
+        status: 404,
+        headers: {
+          "Content-Type": "application/json",
+          ...corsHeaders
+        }
+      });
+    }
+    const order = [JSON.parse(orderRaw)];
     return new Response(JSON.stringify({
       success: true,
       data: order
@@ -117,12 +98,12 @@ function handleGetOrderById(orderId) {
         ...corsHeaders
       }
     });
-  } else {
+  } catch (error) {
     return new Response(JSON.stringify({
       success: false,
-      error: "Orden no encontrada"
+      error: "Error interno"
     }), {
-      status: 404,
+      status: 500,
       headers: {
         "Content-Type": "application/json",
         ...corsHeaders
@@ -131,8 +112,92 @@ function handleGetOrderById(orderId) {
   }
 }
 __name(handleGetOrderById, "handleGetOrderById");
+async function handleCreateOrder(request, env) {
+  try {
+    const body = await request.json();
+    const { symbol, quantity, price, orderType, notes, userId } = body;
+    const id = crypto.randomUUID();
+    const now = /* @__PURE__ */ new Date();
+    const newOrder = {
+      id,
+      symbol,
+      quantity,
+      price,
+      orderType,
+      status: "PENDING",
+      createdAt: now,
+      updatedAt: null,
+      notes: notes || null,
+      userId
+    };
+    await env.ORDERS.put(id, JSON.stringify(newOrder));
+    return new Response(JSON.stringify({ success: true, data: newOrder }), {
+      status: 201,
+      headers: { "Content-Type": "application/json", ...corsHeaders }
+    });
+  } catch (error) {
+    return new Response(JSON.stringify({ success: false, error: "Error al crear la orden" }), {
+      status: 500,
+      headers: { "Content-Type": "application/json", ...corsHeaders }
+    });
+  }
+}
+__name(handleCreateOrder, "handleCreateOrder");
+async function handleUpdateOrder(request, env) {
+  try {
+    const body = await request.json();
+    const { id, ...updates } = body;
+    const orderRaw = await env.ORDERS.get(id);
+    console.log(orderRaw, "orderRaw");
+    if (!orderRaw) {
+      return new Response(JSON.stringify({ success: false, error: "Orden no encontrada" }), {
+        status: 404,
+        headers: { "Content-Type": "application/json", ...corsHeaders }
+      });
+    }
+    const existingOrder = JSON.parse(orderRaw);
+    const updatedOrder = {
+      ...existingOrder,
+      ...updates,
+      updatedAt: /* @__PURE__ */ new Date()
+    };
+    console.log(updatedOrder, "updatedOrder");
+    await env.ORDERS.put(id, JSON.stringify(updatedOrder));
+    return new Response(JSON.stringify({ success: true, data: updatedOrder }), {
+      headers: { "Content-Type": "application/json", ...corsHeaders }
+    });
+  } catch (error) {
+    console.error(error);
+    return new Response(JSON.stringify({ success: false, error: "Error al actualizar la orden" }), {
+      status: 500,
+      headers: { "Content-Type": "application/json", ...corsHeaders }
+    });
+  }
+}
+__name(handleUpdateOrder, "handleUpdateOrder");
+async function handleDeleteOrder(orderId, env) {
+  try {
+    const existing = await env.ORDERS.get(orderId);
+    if (!existing) {
+      return new Response(JSON.stringify({ success: false, error: "Orden no encontrada" }), {
+        status: 404,
+        headers: { "Content-Type": "application/json", ...corsHeaders }
+      });
+    }
+    await env.ORDERS.delete(orderId);
+    return new Response(JSON.stringify({ success: true, message: "Orden eliminada" }), {
+      headers: { "Content-Type": "application/json", ...corsHeaders }
+    });
+  } catch (error) {
+    return new Response(JSON.stringify({ success: false, error: "Error al eliminar la orden" }), {
+      status: 500,
+      headers: { "Content-Type": "application/json", ...corsHeaders }
+    });
+  }
+}
+__name(handleDeleteOrder, "handleDeleteOrder");
 
-// src/handlers/auth.ts
+// src/handlers/auth/auth.ts
 async function handleLogin(request, env) {
   try {
     const { email, password } = await request.json();
@@ -209,12 +274,39 @@ var src_default = {
         headers: { "Content-Type": "application/json" }
       });
     }
-    if (path === "/api/investment-orders" && request.method === "GET") {
-      return handleGetOrders();
+    if (path === "/api/debug-orders") {
+      const list = await env.ORDERS.list();
+      return new Response(JSON.stringify(list.keys, null, 2), {
+        headers: { "Content-Type": "application/json" }
+      });
     }
-    if (path.match(/^\/api\/investment-orders\/\w+$/) && request.method === "GET") {
+    if (path === "/api/orders") {
+      if (request.method === "GET") {
+        return handleGetOrders(env);
+      }
+      if (request.method === "POST") {
+        return handleCreateOrder(request, env);
+      }
+      if (request.method === "PUT") {
+        return handleUpdateOrder(request, env);
+      }
+      if (request.method === "DELETE") {
+        const body = await request.json();
+        const orderId = body.orderId;
+        return handleDeleteOrder(orderId, env);
+      }
+    }
+    if (path.match(/^\/api\/orders\/[\w-]+$/)) {
       const orderId = path.split("/").pop();
-      return handleGetOrderById(orderId);
+      if (request.method === "GET") {
+        return handleGetOrderById(orderId, env);
+      }
+      if (request.method === "PUT") {
+        return handleUpdateOrder(request, env);
+      }
+      if (request.method === "DELETE") {
+        return handleDeleteOrder(orderId, env);
+      }
     }
     if (path === "/api/login" && request.method === "POST") {
       return handleLogin(request, env);
@@ -273,7 +365,7 @@ var jsonError = /* @__PURE__ */ __name(async (request, env, _ctx, middlewareCtx)
 }, "jsonError");
 var middleware_miniflare3_json_error_default = jsonError;
 
-// .wrangler/tmp/bundle-D8bTBy/middleware-insertion-facade.js
+// .wrangler/tmp/bundle-1SQEZ3/middleware-insertion-facade.js
 var __INTERNAL_WRANGLER_MIDDLEWARE__ = [
   middleware_ensure_req_body_drained_default,
   middleware_miniflare3_json_error_default
@@ -305,7 +397,7 @@ function __facade_invoke__(request, env, ctx, dispatch, finalMiddleware) {
 }
 __name(__facade_invoke__, "__facade_invoke__");
 
-// .wrangler/tmp/bundle-D8bTBy/middleware-loader.entry.ts
+// .wrangler/tmp/bundle-1SQEZ3/middleware-loader.entry.ts
 var __Facade_ScheduledController__ = class {
   constructor(scheduledTime, cron, noRetry) {
     this.scheduledTime = scheduledTime;

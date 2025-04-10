@@ -1,5 +1,6 @@
 export interface Env {
   USERS: KVNamespace;
+  ORDERS: KVNamespace;
 }
 
 // Declaración para el tipo ExecutionContext de Cloudflare Workers

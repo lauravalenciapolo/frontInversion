@@ -1,7 +1,7 @@
 import { Env } from './types';
 import { handleOptions, corsHeaders } from './utils/cors';
-import { handleGetOrders, handleGetOrderById } from './handlers/order';
-import { handleLogin, handleRegister } from './handlers/auth';
+import { handleGetOrders, handleGetOrderById, handleCreateOrder, handleUpdateOrder, handleDeleteOrder } from './handlers/order/order';
+import { handleLogin, handleRegister } from './handlers/auth/auth';
 
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
@@ -12,22 +12,55 @@ export default {
     const url = new URL(request.url);
     const path = url.pathname;
 
+    // Debug
     if (path === '/api/debug-users') {
       const list = await env.USERS.list();
       return new Response(JSON.stringify(list.keys, null, 2), {
         headers: { 'Content-Type': 'application/json' }
       });
     }
-
-    if (path === '/api/investment-orders' && request.method === 'GET') {
-      return handleGetOrders();
+    if (path === '/api/debug-orders') {
+      const list = await env.ORDERS.list();
+      return new Response(JSON.stringify(list.keys, null, 2), {
+        headers: { 'Content-Type': 'application/json' }
+      });
     }
 
-    if (path.match(/^\/api\/investment-orders\/\w+$/) && request.method === 'GET') {
+    //API
+
+    //Orders
+    if (path === '/api/orders') {
+      if (request.method === 'GET') {
+        return handleGetOrders(env);
+      }
+      if (request.method === 'POST') {
+        return handleCreateOrder(request, env);
+      }
+      if (request.method === 'PUT') {
+        return handleUpdateOrder(request, env);
+      }
+      if (request.method === 'DELETE') {
+        const body = await request.json() as { orderId: string };
+        const orderId = body.orderId;
+        return handleDeleteOrder(orderId, env);
+      }
+    }
+
+    if (path.match(/^\/api\/orders\/[\w-]+$/)) {
       const orderId = path.split('/').pop();
-      return handleGetOrderById(orderId!);
+      
+      if (request.method === 'GET') {
+        return handleGetOrderById(orderId!, env);
+      }
+      if (request.method === 'PUT') {
+        return handleUpdateOrder(request, env);
+      }
+      if (request.method === 'DELETE') {
+        return handleDeleteOrder(orderId!, env);
+      }
     }
 
+    //Auth
     if (path === '/api/login' && request.method === 'POST') {
       return handleLogin(request, env);
     }

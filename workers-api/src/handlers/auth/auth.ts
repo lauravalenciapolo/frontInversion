@@ -1,5 +1,5 @@
-import { corsHeaders } from '../utils/cors';
-import { Env } from '../types';
+import { corsHeaders } from '../../utils/cors';
+import { Env } from '../../types';
 
 // LOGIN
 export async function handleLogin(request: Request, env: Env) {

@@ -1,13 +1,13 @@
 import { create } from "zustand";
 import { AuthState, LoginCommand } from "@/modules/auth/features/domain/entities/AuthEntity";
-import { AuthRepository } from "@/modules/auth/features/domain/repositories/AuthRepository";
-import { CloudflareAuthRepository } from "@/modules/auth/features/infrastructure/CloudflareAuthRepository";
+import { AuthRepository } from "@/modules/auth/features/login/domain/repositories/AuthRepository";
+import { AuthApiRepository } from "@/modules/auth/features/infrastructure/AuthApiRepository";
 import {
   authReducer,
   validateLoginCommand,
 } from "@/modules/auth/features/login/application/reducers/AuthReducer";
 
-const repository: AuthRepository = new CloudflareAuthRepository();
+const repository: AuthRepository = new AuthApiRepository();
 
 export const useAuthStore = create<
   AuthState & {

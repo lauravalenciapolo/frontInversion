@@ -5,7 +5,7 @@ import { OrderCardBuilder } from "./OrderCardBuilder";
 
 export const OrderCard = ({
   order,
-  onStatusChange,
+  updateOrder,
   className,
   useNeumorphism,
 }: ReturnType<OrderCardBuilder["build"]>) => {
@@ -15,7 +15,7 @@ export const OrderCard = ({
     .setChildren("Completar")
     .setDisabled(order.status !== "PENDING")
     .setNeumorph(useNeumorphism)
-    .setOnClick(() => onStatusChange?.(order.id, "COMPLETED"))
+    .setOnClick(() => updateOrder({ id: order.id, status: "COMPLETED" }))
     .build();
 
   const cancelButton = new ButtonBuilder()
@@ -24,13 +24,12 @@ export const OrderCard = ({
     .setChildren("Eliminar")
     .setDisabled(order.status !== "PENDING")
     .setNeumorph(useNeumorphism)
-    .setOnClick(() => onStatusChange?.(order.id, "CANCELED"))
+    .setOnClick(() => updateOrder({ id: order.id, status: "CANCELLED" }))
     .build();
 
   const statusColor = {
     COMPLETED: "bg-green-100 text-green-800 border-green-200",
-    CANCELED: "bg-red-100 text-red-800 border-red-200",
-    REJECTED: "bg-yellow-100 text-yellow-800 border-yellow-200",
+    CANCELLED: "bg-red-100 text-red-800 border-red-200",
     PENDING: "bg-blue-100 text-blue-800 border-blue-200",
   }[order.status];
 
@@ -61,8 +60,7 @@ export const OrderCard = ({
             {
               PENDING: "Pendiente",
               COMPLETED: "Completada",
-              CANCELED: "Cancelada",
-              REJECTED: "Rechazada",
+              CANCELLED: "Cancelada",
             }[order.status]
           }
         </span>

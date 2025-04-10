@@ -7,6 +7,11 @@ binding = "USERS"
 id = "fd4f250048264759ba7d44111df6df37"        # ← el namespace de producción
 preview_id = "174874857a28460fbe5bf69d2bb866fb" # ← el namespace de desarrollo
 
+[[kv_namespaces]]
+binding = "ORDERS"
+id = "e6728c82938d4a6693831a583d228ca8"        
+preview_id = "7a548a0c541d4532878eff472a77194f"
+
 # Configuración para desarrollo local
 [dev]
 port = 8787
