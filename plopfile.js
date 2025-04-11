@@ -47,38 +47,75 @@ export default function (plop) {
       // 1. Crear estructura básica del módulo
       actions.push({
         type: 'addMany',
-        destination: 'src/features/{{dashCase name}}',
+        destination: 'src/modules/{{dashCase name}}',
         templateFiles: 'plop-templates/module/**/*',
         base: 'plop-templates/module',
         data: data,
         force: false
       });
-      
-      // 2. Crear un archivo README con instrucciones
+
       actions.push({
         type: 'add',
-        path: 'src/features/{{dashCase name}}/README.md',
-        template: `# {{pascalCase name}} Module\n\n## Descripción\n\n{{description}}\n\n## Configuración\n\nPara integrar este módulo, necesitas:\n\n1. Agregar el Feature Flag en src/core/config/featureFlags.ts\n2. Agregar la entrada en menú en src/core/config/menuConfig.tsx\n3. Agregar las rutas en src/core/router/routes.tsx\n\n## Estructura\n\nEste módulo sigue la arquitectura limpia con las siguientes capas:\n\n- **domain/**: Entidades y reglas de negocio\n- **application/**: Casos de uso y lógica de aplicación\n- **presentation/**: Componentes de UI y páginas\n`
+        path: 'src/modules/{{dashCase name}}/presentation/pages/{{pascalCase name}}Page.tsx',
+        templateFile: 'plop-templates/module/presentation/pages/page.tsx.hbs'
       });
       
-      // 3. Si tiene submódulos, crear un archivo para cada uno
+      // 2. Si tiene submódulos, crear un archivo para cada uno
       if (data.hasSubmenus && data.submenus && data.submenus.length > 0) {
         data.submenus.forEach(submenu => {
           actions.push({
             type: 'add',
-            path: `src/features/{{dashCase name}}/presentation/pages/${plop.getHelper('pascalCase')(submenu)}.tsx`,
+            path: `src/modules/{{dashCase name}}/presentation/pages/${plop.getHelper('pascalCase')(submenu)}.tsx`,
             template: `import React from 'react';\n
-export const ${plop.getHelper('pascalCase')(submenu)} = () => {\n
-  return (\n
-    <div className="p-6">\n
-      <h1 className="text-2xl font-bold mb-4">${plop.getHelper('pascalCase')(submenu)}</h1>\n
-      <p>Este es el submódulo ${plop.getHelper('pascalCase')(submenu)} del módulo ${plop.getHelper('pascalCase')(data.name)}.</p>\n
-    </div>\n
-  );\n
-};\n`
+              export const ${plop.getHelper('pascalCase')(submenu)} = () => {\n
+                return (\n
+                  <div className="p-6">\n
+                    <h1 className="text-2xl font-bold mb-4">${plop.getHelper('pascalCase')(submenu)}</h1>\n
+                    <p>Este es el submódulo ${plop.getHelper('pascalCase')(submenu)} del módulo ${plop.getHelper('pascalCase')(data.name)}.</p>\n
+                  </div>\n
+                );\n
+              };\n`
           });
         });
       }
+
+      actions.push({
+        type: 'modify',
+        path: 'src/core/router/index.tsx',
+        pattern: /(\/\/ Aquí agregar nuevas rutas)/,
+        template: `{
+        path: '{{dashCase name}}',
+        element: (
+          <ProtectedRoute
+            element={<{{pascalCase name}}Page />}
+            flag={FeatureFlags.{{constantCase name}}}
+          />
+        ),
+      },
+      $1`
+      });
+
+      actions.push({
+        type: 'modify',
+        path: 'src/core/router/index.tsx',
+        pattern: /(\/\/ Aquí importar nuevos componentes)/,
+        template: `import { {{pascalCase name}}Page } from '@/modules/{{dashCase name}}/presentation/pages/{{pascalCase name}}Page';
+      // $1`
+      });
+
+      actions.push({
+        type: 'modify',
+        path: 'src/core/config/menuConfig.tsx',
+        pattern: /(\/\/ Aquí agregar nuevos items al menú)/,
+        template: `{
+        label: '{{pascalCase name}}',
+        path: '/{{dashCase name}}',
+        icon: <HomeIcon />, // Cambia el ícono si quieres
+        featureFlag: FeatureFlags.{{constantCase name}}
+      },
+      $1`
+      });
+      
       
       console.log('\n✅ Se creó la estructura básica del módulo.');
       console.log('🔍 Recuerda que debes configurar manualmente:');
