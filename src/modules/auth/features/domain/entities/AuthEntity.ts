@@ -5,18 +5,6 @@ export interface User {
   email: string;
 }
 
-export interface AuthState {
-  user: User | null;
-  isAuthenticated: boolean;
-  isLoading: boolean;
-  error: string | null;
-}
-
-export interface AuthEvent {
-  type: "LOGIN_REQUEST" | "LOGIN_SUCCESS" | "LOGIN_FAILURE" | "LOGOUT";
-  payload?: any;
-}
-
 export interface RegisterCommand {
   email: string;
   password: string;
