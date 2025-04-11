@@ -17,11 +17,6 @@ export interface AuthEvent {
   payload?: any;
 }
 
-export interface LoginCommand {
-  email: string;
-  password: string;
-}
-
 export interface RegisterCommand {
   email: string;
   password: string;

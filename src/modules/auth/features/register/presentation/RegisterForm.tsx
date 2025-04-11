@@ -3,12 +3,12 @@ import { Link } from "react-router-dom";
 import { useModuleFeatures } from "@/hooks/useModuleFeatures";
 import { Button } from "@/components/atoms/Button";
 import { ButtonBuilder } from "@/components/atoms/Button/ButtonBuilder";
-import { useRegister } from "@/modules/auth/features/register/application/useRegister";
+import { useRegister } from "@/modules/auth/features/register/application/hook/useRegisterQueries";
 import { useNavigate } from "react-router-dom";
 
 export const RegisterForm: React.FC = () => {
   const { features } = useModuleFeatures();
-  const { registerUser } = useRegister();
+  const { mutateAsync: registerUser } = useRegister();
   const navigate = useNavigate();
   const [dataRegisterUser, setDataRegisterUser] = useState({
     name: "",

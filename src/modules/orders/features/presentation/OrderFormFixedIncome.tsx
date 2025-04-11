@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Button } from "@/components/atoms/Button/Button";
 import { ButtonBuilder } from "@/components/atoms/Button/ButtonBuilder";
-import { useAuthStore } from "@modules/auth/features/login/application/store/useAuthStore";
-import { InvestmentOrderEntity } from "@/modules/orders/features/domain/entities/OrderEntity";
+import { useAuth } from "@modules/auth/features/application/hooks/useAuthQueries";
+import { OrderCreateRequest, ResponseOrder } from "@/modules/orders/features/domain/entities/OrderEntity";
 import BaseForm from "@components/molecules/BaseForm/BaseForm";
 import { InputBuilder } from "@/components/atoms/Input/InputBuilder";
 import { Input } from "@/components/atoms/Input";
@@ -14,15 +14,15 @@ import { TextareaBuilder } from "@/components/atoms/Textarea/TextareaBuilder";
 type OrderFormFixedIncomeProps = {
   useNeumorphism: boolean;
   createItem: (
-    data: Partial<InvestmentOrderEntity>
-  ) => Promise<InvestmentOrderEntity>;
+    data: OrderCreateRequest
+  ) => Promise<ResponseOrder>;
 };
 
 export const OrderFormFixedIncome = ({
   useNeumorphism,
   createItem,
 }: OrderFormFixedIncomeProps) => {
-  const { user } = useAuthStore();
+  const { user } = useAuth();
   const initialFormatData = {
     symbol: "",
     quantity: 1,
@@ -54,7 +54,6 @@ export const OrderFormFixedIncome = ({
       await createItem({
         ...formData,
         userId: user.id,
-        status: "PENDING",
         notes: formData.notes || undefined,
       });
 
@@ -122,29 +121,7 @@ export const OrderFormFixedIncome = ({
     .setNeumorph(useNeumorphism)
     .build();
 
-  const portfolioSelect = new SelectBuilder()
-    .setLabel("Portafolio")
-    .setOptions([
-      { value: "OTHER", label: "Otro" },
-      { value: "X", label: "Otro 2" },
-    ])
-    .setValue(formData.orderType)
-    .setOnChange((e) => updateFormData("orderType", e.target.value))
-    .setSelectSize("md")
-    .setNeumorph(useNeumorphism)
-    .build();
 
-  const brokerSelect = new SelectBuilder()
-    .setLabel("Broker")
-    .setOptions([
-      { value: "SURA", label: "Sura" },
-      { value: "OTHER", label: "Otro" },
-    ])
-    .setValue(formData.orderType)
-    .setOnChange((e) => updateFormData("orderType", e.target.value))
-    .setSelectSize("md")
-    .setNeumorph(useNeumorphism)
-    .build();
   
   const noteTextarea = new TextareaBuilder()
     .setLabel("Notas")

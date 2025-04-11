@@ -1,13 +1,13 @@
 import { isFeatureEnabled, FeatureFlags } from "@utils/featureFlags";
 import { cn } from "@utils/cn";
-import { useAuthStore } from "@modules/auth/features/login/application/store/useAuthStore";
+import { useAuth } from "@modules/auth/features/application/hooks/useAuthQueries";
 import { SidebarProps } from './Sidebar.types';
 import { Button } from "@/components/atoms/Button";
 import { NavigationMenu } from "@/components/molecules/NavigationMenu/NavigationMenu";
 
 export const Sidebar: React.FC<SidebarProps> = ({sidebarOpen, setSidebarOpen}) => {
   const useNeumorphism = isFeatureEnabled(FeatureFlags.USE_NEUMORPHISM);
-  const { user } = useAuthStore();
+  const { user } = useAuth();
   const MenuIcon = () => sidebarOpen ? <span>X</span>: <span>☰</span>;
 
   return (

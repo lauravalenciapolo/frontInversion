@@ -4,18 +4,20 @@ import { isFeatureEnabled, FeatureFlags } from "@utils/featureFlags";
 import { cn } from "@/utils/cn";
 import { ProfileMenu } from "@/components/molecules/ProfileMenu/ProfileMenu";
 
-import { useAuthStore } from "@modules/auth/features/login/application/store/useAuthStore";
+import { useAuth } from "@modules/auth/features/application/hooks/useAuthQueries";
 import { useMobile } from "@/hooks/useMobile";
 import { Sidebar } from "@/components/organisms/Sidebar/Sidebar";
 import NotificationComponent from "@/components/organisms/Notification/Notification"; // ajusta el path según tu estructura
 import { useNotification } from "@modules/notifications/application/hook/useNotification"; // ajusta el path
 import { useTheme } from "@/core/theme/ThemeProvider";
+import { useLogout } from "@/modules/auth/features/login/application/hooks/useLoginQueries";
 
 export const MainLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const useNeumorphism = isFeatureEnabled(FeatureFlags.USE_NEUMORPHISM);
 
-  const { logout, user } = useAuthStore();
+  const { mutate: logout } = useLogout();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const isMobile = useMobile();
   const { toggleDarkMode } = useTheme();
